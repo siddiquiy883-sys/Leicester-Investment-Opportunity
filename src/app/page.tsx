@@ -69,11 +69,13 @@ export default function VIPFunnel() {
     };
 
     try {
+      const formBody = new URLSearchParams(payload as any).toString();
+
       await fetch('https://script.google.com/macros/s/AKfycbxgA4qVKyfnWX14kodkhTR_dyxUCUMvUYdZoFVk6ZXu9JgYkZlu-wY4xC4gmUmr2senxA/exec', {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formBody
       });
       // Fire generic pixel event simulation
       if (typeof window !== 'undefined') {
