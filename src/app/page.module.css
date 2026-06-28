@@ -1,0 +1,423 @@
+.main {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.backgroundVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.videoOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Lightened to make video more visible */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(15, 15, 15, 0.4) 100%);
+  z-index: -1;
+}
+
+/* Header & Logos */
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  z-index: 10;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .logo {
+    height: 80px;
+  }
+}
+
+/* Main Layout */
+.contentWrapper {
+  flex: 1;
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .contentWrapper {
+    align-items: center;
+    padding: 2rem 5%;
+  }
+}
+
+.splitScreen {
+  display: flex;
+  width: 100%;
+  gap: 40px;
+}
+
+.imagePanel {
+  flex: 1;
+  display: none;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  min-height: 600px;
+}
+
+@media (min-width: 900px) {
+  .imagePanel {
+    display: block;
+  }
+}
+
+.panelImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Form Panel */
+.formPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem 0.8rem;
+  border-radius: 16px;
+  width: 100%;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .formPanel {
+    padding: 3rem;
+  }
+}
+
+/* Back Button */
+.backButton {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: transparent;
+  border: none;
+  color: var(--color-platinum);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  padding: 5px;
+  z-index: 5;
+}
+
+.backButton:hover {
+  opacity: 1;
+  color: var(--color-gold);
+}
+
+@media (min-width: 768px) {
+  .backButton {
+    top: 25px;
+    left: 30px;
+  }
+}
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  margin-top: 30px; /* Space for back button */
+}
+
+/* Step 0 Specifics */
+.stepContainer.stepZero {
+  margin-top: 0;
+}
+
+.questionTitle {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-platinum);
+  line-height: 1.3;
+}
+
+@media (min-width: 768px) {
+  .questionTitle {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .optionsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
+.optionButton {
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .optionButton {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Video Placeholder */
+.videoPlaceholder {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid var(--color-gold);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+@media (min-width: 768px) {
+  .videoPlaceholder {
+    aspect-ratio: 16/9;
+  }
+}
+
+.playButton {
+  width: 60px;
+  height: 60px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  transition: transform 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .playButton {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+}
+
+.playTriangle {
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 20px solid var(--color-onyx);
+  margin-left: 6px;
+}
+
+@media (min-width: 768px) {
+  .playTriangle {
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 25px solid var(--color-onyx);
+    margin-left: 8px;
+  }
+}
+
+
+/* Forms */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.formGroup label {
+  font-size: 0.9rem;
+  color: var(--color-platinum);
+}
+
+.formGroup input, .formGroup select {
+  padding: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-glass-border);
+  background: rgba(255,255,255,0.05);
+  color: var(--color-white);
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.submitButton {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* Calendar */
+.calendarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dateTabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dateTab {
+  flex: 1;
+  min-width: 90px;
+  padding: 10px 5px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .dateTab {
+    min-width: 100px;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+.dateTab.active {
+  background: var(--color-gold);
+  color: var(--color-onyx);
+}
+
+.slotsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .slotsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
+}
+
+.slotButton {
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .slotButton {
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+.slotButton.selected {
+  background: var(--color-gold);
+  color: var(--color-onyx);
+}
+
+.scarcityContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-direction: row;
+}
+
+.scarcityImage {
+  flex: 1;
+  border-radius: 8px;
+  object-fit: cover;
+  height: 80px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .scarcityImage {
+    height: 120px;
+  }
+}
+
+/* Regulatory Footer */
+.regulatoryFooter {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-glass-border);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.regLogo {
+  height: 55px;
+  width: auto;
+  object-fit: contain;
+}
