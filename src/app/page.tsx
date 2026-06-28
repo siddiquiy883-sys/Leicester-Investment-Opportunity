@@ -69,8 +69,9 @@ export default function VIPFunnel() {
     };
 
     try {
-      await fetch('/api/book', {
+      await fetch('https://script.google.com/macros/s/AKfycbxgA4qVKyfnWX14kodkhTR_dyxUCUMvUYdZoFVk6ZXu9JgYkZlu-wY4xC4gmUmr2senxA/exec', {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
