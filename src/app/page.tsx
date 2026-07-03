@@ -189,7 +189,7 @@ export default function VIPFunnel() {
             {/* Step 3: Concierge */}
             {step === 3 && (
               <div className={`${styles.stepContainer} fade-in`}>
-                <h2 className={styles.questionTitle}>Which Springbok Concierge Services do you require?</h2>
+                <h2 className={styles.questionTitle}>Which services do you require?</h2>
                 <div className={styles.optionsGrid} style={{ gridTemplateColumns: '1fr' }}>
                   {['Money Wiring', 'Legals', 'Rental Management', 'Flipping', 'Acquisition'].map(opt => (
                     <button key={opt} className={`${styles.optionButton} glass-button`} onClick={() => handleNext('concierge', opt)}>
