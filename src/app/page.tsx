@@ -154,22 +154,16 @@ export default function VIPFunnel() {
         <div className={styles.popupOverlay}>
           <div className={`${styles.popupModal} glass-panel`}>
             <div className={styles.popupIcon}>🏙️</div>
-            <h2 className={styles.popupTitle}>Welcome to the Exclusive Dubai Property Show</h2>
+            <h2 className={styles.popupTitle}>Event Alert</h2>
             <p className={styles.popupSubtext}>
-              Leicester, UK — 31 July to 3 August 2026. Before you begin your VIP application, we recommend watching a brief message from our Founder.
+              Leicester, UK | 31 July to 3 August 2026. Before you begin your VIP application, we recommend watching a brief message from our Founder.
             </p>
             <div className={styles.popupButtons}>
               <button 
                 className={styles.popupPrimaryBtn}
                 onClick={() => { setShowPopup(false); setStep(0); }}
               >
-                ▶ Watch the Video First
-              </button>
-              <button 
-                className={styles.popupSecondaryBtn}
-                onClick={() => { setShowPopup(false); setStep(1); }}
-              >
-                Skip & Apply Now →
+                ▶ Watch The Video
               </button>
             </div>
           </div>
@@ -213,7 +207,7 @@ export default function VIPFunnel() {
             {/* Progress Bar — visible during steps 1-5 */}
             {step >= 1 && step <= 5 && (
               <div>
-                <div className={styles.progressText}>Application Progress — {getProgress()}%</div>
+                <div className={styles.progressText}>Application Progress: {getProgress()}%</div>
                 <div className={styles.progressBarContainer}>
                   <div className={styles.progressBarFill} style={{ width: `${getProgress()}%` }}></div>
                 </div>
@@ -253,10 +247,10 @@ export default function VIPFunnel() {
             {/* ====== STEP 0: HERO ====== */}
             {step === 0 && !showInfoCard && !showPopup && (
               <div className={`${styles.stepContainer} fade-in`}>
-                <div className={styles.heroEventBadge}>📍 Leicester, UK — July 31 – Aug 3, 2026</div>
+                <div className={styles.heroEventBadge}>📍 Leicester, UK | July 31 to Aug 3, 2026</div>
                 <h1 className={styles.questionTitle}>Exclusive Dubai Property Show</h1>
                 <p className={styles.heroDescription}>
-                  An invite-only consultation event by Springbok Real Estate & Sobha Realty. Meet directly with our investment advisors to access off-market luxury properties in Dubai — before they are released to the public.
+                  An invite-only consultation event by Springbok Real Estate & Sobha Realty. Meet directly with our investment advisors to access off-market luxury properties in Dubai before they are released to the public.
                 </p>
 
                 <div className={styles.heroStats}>
@@ -269,7 +263,7 @@ export default function VIPFunnel() {
                     <span className={styles.heroStatLabel}>Capital Growth</span>
                   </div>
                   <div className={styles.heroStat}>
-                    <span className={styles.heroStatValue}>£15K</span>
+                    <span className={styles.heroStatValue}>£150K</span>
                     <span className={styles.heroStatLabel}>Starting From</span>
                   </div>
                 </div>
