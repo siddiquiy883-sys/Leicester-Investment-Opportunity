@@ -255,16 +255,18 @@
 }
 
 .playButton {
-  width: 60px;
-  height: 60px;
-  background: var(--color-gold);
+  width: 70px;
+  height: 70px;
+  background: rgba(212, 175, 55, 0.95);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.6), 0 0 60px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s ease;
   animation: pulseGlow 2s ease-in-out infinite;
+  position: absolute;
+  z-index: 5;
 }
 
 @media (min-width: 768px) {
