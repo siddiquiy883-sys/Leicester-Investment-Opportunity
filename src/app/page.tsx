@@ -305,9 +305,11 @@ export default function VIPFunnel() {
 
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-gold)', marginBottom: '8px' }}>Watch the message from our Founder:</p>
                 <div className={styles.videoPlaceholder} onClick={() => setShowVideo(true)}>
-                  <video className={styles.videoThumbnail} muted playsInline preload="metadata">
-                    <source src="/assets/founder-video.mp4#t=0.5" type="video/mp4" />
-                  </video>
+                  <img 
+                    src="/assets/video-thumbnail.jpg" 
+                    alt="Watch Founder Video" 
+                    className={styles.videoThumbnail}
+                  />
                   <div className={styles.playButton}>
                     <div className={styles.playTriangle}></div>
                   </div>
