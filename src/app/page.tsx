@@ -256,6 +256,9 @@ export default function VIPFunnel() {
             {/* ====== INFO CARD OVERLAY ====== */}
             {showInfoCard && INFO_CARDS[showInfoCard] && (
               <div className={`${styles.stepContainer} fade-in`}>
+                <button onClick={() => setShowInfoCard(null)} className={styles.backButton}>
+                  ← Back
+                </button>
                 <div className={styles.infoCard}>
                   <img 
                     src={INFO_CARDS[showInfoCard].image} 
@@ -462,14 +465,44 @@ export default function VIPFunnel() {
               <div className={`${styles.stepContainer} fade-in`}>
                 <h2 className={styles.questionTitle}>While our VIP allocations require a £15k minimum down payment...</h2>
                 <p>We still want to help you on your investment journey. Download our exclusive UK Investor&apos;s Guide to Dubai Real Estate.</p>
-                <form onSubmit={(e) => { e.preventDefault(); window.location.href = '/assets/UK%20INVESTMENT%20GUIDE.pdf'; }}>
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.target as HTMLFormElement;
+                  const payload = {
+                    timestamp: new Date().toISOString(),
+                    firstName: (form.elements.namedItem('rejFirstName') as HTMLInputElement).value,
+                    lastName: '',
+                    email: (form.elements.namedItem('rejEmail') as HTMLInputElement).value,
+                    whatsapp: (form.elements.namedItem('rejPhone') as HTMLInputElement).value,
+                    objective: objective || 'N/A',
+                    budget: 'No (Less Qualified)',
+                    concierge: 'N/A',
+                    timeline: 'N/A',
+                    timeSlot: 'N/A',
+                    leadType: 'Less Qualified - Brochure Download',
+                    ...utmParams
+                  };
+                  try {
+                    await fetch('https://script.google.com/macros/s/AKfycbxgA4qVKyfnWX14kodkhTR_dyxUCUMvUYdZoFVk6ZXu9JgYkZlu-wY4xC4gmUmr2senxA/exec', {
+                      method: 'POST',
+                      mode: 'no-cors',
+                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                      body: new URLSearchParams(payload as any).toString()
+                    });
+                  } catch (err) { console.error(err); }
+                  window.location.href = '/assets/UK%20INVESTMENT%20GUIDE.pdf';
+                }}>
                    <div className={styles.formGroup}>
                     <label>First Name</label>
-                    <input required type="text" />
+                    <input required type="text" name="rejFirstName" />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Email Address</label>
-                    <input required type="email" />
+                    <input required type="email" name="rejEmail" />
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label>Phone Number</label>
+                    <input required type="tel" name="rejPhone" placeholder="+44" />
                   </div>
                   <button type="submit" className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
                     Download Free Guide Now
@@ -483,14 +516,44 @@ export default function VIPFunnel() {
               <div className={`${styles.stepContainer} fade-in`}>
                 <h2 className={styles.questionTitle}>Since you are looking to invest next year...</h2>
                 <p>We have added you to our priority waitlist. We will contact you when our next portfolio is released.</p>
-                <form onSubmit={(e) => { e.preventDefault(); setStep(6); }}>
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.target as HTMLFormElement;
+                  const payload = {
+                    timestamp: new Date().toISOString(),
+                    firstName: (form.elements.namedItem('wlFirstName') as HTMLInputElement).value,
+                    lastName: '',
+                    email: (form.elements.namedItem('wlEmail') as HTMLInputElement).value,
+                    whatsapp: (form.elements.namedItem('wlPhone') as HTMLInputElement).value,
+                    objective: objective || 'N/A',
+                    budget: budget || 'N/A',
+                    concierge: concierge || 'N/A',
+                    timeline: 'Next Year (Less Qualified)',
+                    timeSlot: 'N/A',
+                    leadType: 'Less Qualified - Waitlist',
+                    ...utmParams
+                  };
+                  try {
+                    await fetch('https://script.google.com/macros/s/AKfycbxgA4qVKyfnWX14kodkhTR_dyxUCUMvUYdZoFVk6ZXu9JgYkZlu-wY4xC4gmUmr2senxA/exec', {
+                      method: 'POST',
+                      mode: 'no-cors',
+                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                      body: new URLSearchParams(payload as any).toString()
+                    });
+                  } catch (err) { console.error(err); }
+                  setStep(6);
+                }}>
                    <div className={styles.formGroup}>
                     <label>First Name</label>
-                    <input required type="text" />
+                    <input required type="text" name="wlFirstName" />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Email Address</label>
-                    <input required type="email" />
+                    <input required type="email" name="wlEmail" />
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label>Phone Number</label>
+                    <input required type="tel" name="wlPhone" placeholder="+44" />
                   </div>
                   <button type="submit" className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
                     Join Priority Waitlist
