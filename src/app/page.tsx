@@ -167,6 +167,12 @@ export default function VIPFunnel() {
               >
                 ▶ Watch The Video
               </button>
+              <button
+                className={styles.popupSkipBtn}
+                onClick={() => { setShowPopup(false); setStep(0); }}
+              >
+                Skip & Apply Now
+              </button>
             </div>
           </div>
         </div>

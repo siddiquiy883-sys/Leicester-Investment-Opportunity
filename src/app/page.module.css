@@ -548,6 +548,24 @@
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
 
+.popupSkipBtn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: all 0.3s ease;
+}
+
+.popupSkipBtn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .popupSecondaryBtn {
   padding: 12px 20px;
   border-radius: 8px;
