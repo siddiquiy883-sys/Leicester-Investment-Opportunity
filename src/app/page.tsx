@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './page.module.css';
 
 const CALENDAR_DATES = [
@@ -36,7 +36,9 @@ const INFO_CARDS: Record<string, { title: string; text: string; image: string }>
 export default function VIPFunnel() {
   const [step, setStep] = useState(0);
   const [showPopup, setShowPopup] = useState(true);
+  const [showVideo, setShowVideo] = useState(false);
   const [showInfoCard, setShowInfoCard] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [utmParams, setUtmParams] = useState({ source: '', medium: '', campaign: '' });
   
   // Form State
@@ -161,11 +163,35 @@ export default function VIPFunnel() {
             <div className={styles.popupButtons}>
               <button 
                 className={styles.popupPrimaryBtn}
-                onClick={() => { setShowPopup(false); setStep(0); }}
+                onClick={() => { setShowPopup(false); setShowVideo(true); }}
               >
                 ▶ Watch The Video
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen Founder Video Modal */}
+      {showVideo && (
+        <div className={styles.videoModal}>
+          <button className={styles.videoModalClose} onClick={() => { setShowVideo(false); if (videoRef.current) videoRef.current.pause(); }}>✕</button>
+          <div className={styles.videoModalContent}>
+            <video
+              ref={videoRef}
+              className={styles.videoModalPlayer}
+              controls
+              autoPlay
+              playsInline
+            >
+              <source src="/assets/founder-video.mp4" type="video/mp4" />
+            </video>
+            <button
+              className={styles.videoModalCTA}
+              onClick={() => { setShowVideo(false); if (videoRef.current) videoRef.current.pause(); setStep(1); }}
+            >
+              Begin Application
+            </button>
           </div>
         </div>
       )}
@@ -269,11 +295,13 @@ export default function VIPFunnel() {
                 </div>
 
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-gold)', marginBottom: '8px' }}>Watch the message from our Founder:</p>
-                <div className={styles.videoPlaceholder} onClick={() => alert("Video coming soon!")}>
+                <div className={styles.videoPlaceholder} onClick={() => setShowVideo(true)}>
+                  <video className={styles.videoThumbnail} muted playsInline preload="metadata">
+                    <source src="/assets/founder-video.mp4#t=0.5" type="video/mp4" />
+                  </video>
                   <div className={styles.playButton}>
                     <div className={styles.playTriangle}></div>
                   </div>
-                  <p style={{position: 'absolute', bottom: 10, color: 'white', fontSize: '0.85rem'}}>Founder Video</p>
                 </div>
                 <button className={`${styles.submitButton} glass-button`} onClick={() => setStep(1)} style={{ background: 'var(--color-gold)', color: 'var(--color-onyx)' }}>
                   Begin Application
