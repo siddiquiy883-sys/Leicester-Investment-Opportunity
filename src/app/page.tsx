@@ -439,6 +439,15 @@ export default function VIPFunnel() {
                 <h2 className={styles.questionTitle} style={{ color: 'var(--color-gold)' }}>Allocation Secured.</h2>
                 <p>We look forward to seeing you on {timeSlot.date} at {timeSlot.time}.</p>
                 <p>Our concierge team will reach out via WhatsApp shortly with location details.</p>
+                <a
+                  href="https://springboksrealestate.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.submitButton} glass-button`}
+                  style={{ background: 'var(--color-gold)', color: 'var(--color-onyx)', display: 'inline-block', textDecoration: 'none', marginTop: '16px' }}
+                >
+                  Visit Our Website →
+                </a>
               </div>
             )}
 
