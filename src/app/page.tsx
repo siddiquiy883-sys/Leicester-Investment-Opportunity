@@ -2,6 +2,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './page.module.css';
 
+// TypeScript declaration for GTM dataLayer
+declare global {
+  interface Window {
+    dataLayer: Record<string, unknown>[];
+  }
+}
+
 const CALENDAR_DATES = [
   { id: '2026-07-31', label: 'July 31, 2026', slots: ['09:00 AM', '11:00 AM', '02:00 PM', '04:00 PM'] },
   { id: '2026-08-01', label: 'Aug 1, 2026', slots: ['09:00 AM', '11:00 AM', '02:00 PM', '04:00 PM', '06:00 PM'] },
@@ -126,6 +133,7 @@ export default function VIPFunnel() {
       // Fire generic pixel event simulation
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('Qualified_Lead_Booked', { detail: payload }));
+        window.dataLayer?.push({event: 'form_submit', lead_type: 'qualified'});
       }
       setStep(6); // Success
     } catch (error) {
@@ -164,14 +172,16 @@ export default function VIPFunnel() {
             </p>
             <div className={styles.popupButtons}>
               <button 
+                id="btn-popup-watch-video"
                 className={styles.popupPrimaryBtn}
-                onClick={() => { setShowPopup(false); setShowVideo(true); }}
+                onClick={() => { window.dataLayer?.push({event: 'popup_watch_video'}); setShowPopup(false); setShowVideo(true); }}
               >
                 ▶ Watch The Video
               </button>
               <button
+                id="btn-popup-skip"
                 className={styles.popupSkipBtn}
-                onClick={() => { setShowPopup(false); setStep(0); }}
+                onClick={() => { window.dataLayer?.push({event: 'popup_skip'}); setShowPopup(false); setStep(0); }}
               >
                 Skip & Apply Now
               </button>
@@ -183,7 +193,7 @@ export default function VIPFunnel() {
       {/* Fullscreen Founder Video Modal */}
       {showVideo && (
         <div className={styles.videoModal}>
-          <button className={styles.videoModalClose} onClick={() => { setShowVideo(false); if (videoRef.current) videoRef.current.pause(); }}>✕</button>
+          <button id="btn-video-close" className={styles.videoModalClose} onClick={() => { setShowVideo(false); if (videoRef.current) videoRef.current.pause(); }}>✕</button>
           <div className={styles.videoModalContent}>
             <video
               ref={videoRef}
@@ -195,8 +205,9 @@ export default function VIPFunnel() {
               <source src="/assets/founder-video.mp4" type="video/mp4" />
             </video>
             <button
+              id="btn-video-begin-application"
               className={styles.videoModalCTA}
-              onClick={() => { setShowVideo(false); if (videoRef.current) videoRef.current.pause(); setStep(1); }}
+              onClick={() => { window.dataLayer?.push({event: 'begin_application', source: 'video_modal'}); setShowVideo(false); if (videoRef.current) videoRef.current.pause(); setStep(1); }}
             >
               Begin Application
             </button>
@@ -306,7 +317,7 @@ export default function VIPFunnel() {
                 </div>
 
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-gold)', marginBottom: '8px' }}>Watch the message from our Founder:</p>
-                <div className={styles.videoPlaceholder} onClick={() => setShowVideo(true)}>
+                <div id="btn-hero-play-video" className={styles.videoPlaceholder} onClick={() => { window.dataLayer?.push({event: 'hero_play_video'}); setShowVideo(true); }}>
                   <img 
                     src="/assets/video-thumbnail.jpg" 
                     alt="Watch Founder Video" 
@@ -316,7 +327,7 @@ export default function VIPFunnel() {
                     <div className={styles.playTriangle}></div>
                   </div>
                 </div>
-                <button className={`${styles.submitButton} glass-button`} onClick={() => setStep(1)} style={{ background: 'var(--color-gold)', color: 'var(--color-onyx)' }}>
+                <button id="btn-hero-begin-application" className={`${styles.submitButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'begin_application', source: 'hero'}); setStep(1); }} style={{ background: 'var(--color-gold)', color: 'var(--color-onyx)' }}>
                   Begin Application
                 </button>
               </div>
@@ -329,7 +340,7 @@ export default function VIPFunnel() {
                 <p className={styles.questionSubtitle}>Select the option that best describes your investment goal.</p>
                 <div className={styles.optionsGrid}>
                   {['High ROI', 'Rental Yield', 'Golden Visa', 'Relocation'].map(opt => (
-                    <button key={opt} className={`${styles.optionButton} glass-button`} onClick={() => handleNext('objective', opt)}>
+                    <button key={opt} id={`btn-step1-objective-${opt.toLowerCase().replace(/\s/g, '-')}`} className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step1_objective', value: opt}); handleNext('objective', opt); }}>
                       {opt}
                     </button>
                   ))}
@@ -342,10 +353,10 @@ export default function VIPFunnel() {
               <div className={`${styles.stepContainer} fade-in`}>
                 <h2 className={styles.questionTitle}>Do you have access to £15,000 - £30,000 in liquid funds for the initial down payment?</h2>
                 <div className={styles.optionsGrid}>
-                  <button className={`${styles.optionButton} glass-button`} onClick={() => handleNext('budget', 'Yes')}>
+                  <button id="btn-step2-budget-yes" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step2_budget', value: 'yes'}); handleNext('budget', 'Yes'); }}>
                     Yes, I am ready.
                   </button>
-                  <button className={`${styles.optionButton} glass-button`} onClick={() => handleNext('budget', 'No')}>
+                  <button id="btn-step2-budget-no" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step2_budget', value: 'no'}); handleNext('budget', 'No'); }}>
                     No, not currently.
                   </button>
                 </div>
@@ -359,7 +370,7 @@ export default function VIPFunnel() {
                 <p className={styles.questionSubtitle}>Our concierge team will prepare everything before your consultation.</p>
                 <div className={styles.optionsGrid} style={{ gridTemplateColumns: '1fr' }}>
                   {['Money Wiring', 'Legals', 'Rental Management', 'Flipping', 'Acquisition'].map(opt => (
-                    <button key={opt} className={`${styles.optionButton} glass-button`} onClick={() => handleNext('concierge', opt)}>
+                    <button key={opt} id={`btn-step3-concierge-${opt.toLowerCase().replace(/\s/g, '-')}`} className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step3_concierge', value: opt}); handleNext('concierge', opt); }}>
                       {opt}
                     </button>
                   ))}
@@ -372,9 +383,9 @@ export default function VIPFunnel() {
               <div className={`${styles.stepContainer} fade-in`}>
                 <h2 className={styles.questionTitle}>When are you looking to invest?</h2>
                 <div className={styles.optionsGrid}>
-                  <button className={`${styles.optionButton} glass-button`} onClick={() => handleNext('timeline', 'Immediately')}>Immediately</button>
-                  <button className={`${styles.optionButton} glass-button`} onClick={() => handleNext('timeline', '1-3 Months')}>1-3 Months</button>
-                  <button className={`${styles.optionButton} glass-button`} onClick={() => handleNext('timeline', 'Next Year')}>Next Year</button>
+                  <button id="btn-step4-timeline-immediately" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step4_timeline', value: 'immediately'}); handleNext('timeline', 'Immediately'); }}>Immediately</button>
+                  <button id="btn-step4-timeline-1-3-months" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step4_timeline', value: '1-3months'}); handleNext('timeline', '1-3 Months'); }}>1-3 Months</button>
+                  <button id="btn-step4-timeline-next-year" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step4_timeline', value: 'next_year'}); handleNext('timeline', 'Next Year'); }}>Next Year</button>
                 </div>
               </div>
             )}
@@ -439,7 +450,7 @@ export default function VIPFunnel() {
                     <img src="/assets/Off-Market%22%20Teaser%20Graphic%202.JPG" alt="Off-Market Teaser 2" className={styles.scarcityImage} />
                   </div>
 
-                  <button type="submit" disabled={!timeSlot.time || isSubmitting} className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
+                  <button id="btn-step5-submit-form" type="submit" disabled={!timeSlot.time || isSubmitting} className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
                     {isSubmitting ? 'Securing...' : 'Lock In My VIP Allocation'}
                   </button>
                 </form>
@@ -453,11 +464,13 @@ export default function VIPFunnel() {
                 <p>We look forward to seeing you on {timeSlot.date} at {timeSlot.time}.</p>
                 <p>Our concierge team will reach out via WhatsApp shortly with location details.</p>
                 <a
+                  id="btn-success-visit-website"
                   href="https://springboksrealestate.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${styles.submitButton} glass-button`}
                   style={{ background: 'var(--color-gold)', color: 'var(--color-onyx)', display: 'inline-block', textDecoration: 'none', marginTop: '16px' }}
+                  onClick={() => window.dataLayer?.push({event: 'visit_website'})}
                 >
                   Visit Our Website →
                 </a>
@@ -494,6 +507,7 @@ export default function VIPFunnel() {
                       body: new URLSearchParams(payload as any).toString()
                     });
                   } catch (err) { console.error(err); }
+                  window.dataLayer?.push({event: 'download_guide', lead_type: 'less_qualified'});
                   window.location.href = '/assets/UK%20INVESTMENT%20GUIDE.pdf';
                 }}>
                    <div className={styles.formGroup}>
@@ -508,7 +522,7 @@ export default function VIPFunnel() {
                     <label>Phone Number</label>
                     <input required type="tel" name="rejPhone" placeholder="+44" />
                   </div>
-                  <button type="submit" className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
+                  <button id="btn-step8-download-guide" type="submit" className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
                     Download Free Guide Now
                   </button>
                 </form>
@@ -545,6 +559,7 @@ export default function VIPFunnel() {
                       body: new URLSearchParams(payload as any).toString()
                     });
                   } catch (err) { console.error(err); }
+                  window.dataLayer?.push({event: 'form_submit', lead_type: 'waitlist'});
                   setStep(6);
                 }}>
                    <div className={styles.formGroup}>
@@ -559,7 +574,7 @@ export default function VIPFunnel() {
                     <label>Phone Number</label>
                     <input required type="tel" name="wlPhone" placeholder="+44" />
                   </div>
-                  <button type="submit" className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
+                  <button id="btn-step9-join-waitlist" type="submit" className={`${styles.submitButton} glass-button`} style={{ background: 'var(--color-gold)', color: 'black' }}>
                     Join Priority Waitlist
                   </button>
                 </form>
