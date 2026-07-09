@@ -399,6 +399,7 @@ export default function VIPFunnel() {
                 <form onSubmit={handleFinalSubmit}>
                   {/* Calendar UI */}
                   <div className={styles.calendarContainer}>
+                    <label className={styles.calendarLabel}>📅 Select Date</label>
                     <div className={styles.dateTabs}>
                       {CALENDAR_DATES.map(date => (
                         <button 
@@ -410,6 +411,7 @@ export default function VIPFunnel() {
                         </button>
                       ))}
                     </div>
+                    <label className={styles.calendarLabel}>🕐 Select Time</label>
                     <div className={styles.slotsGrid}>
                       {CALENDAR_DATES.find(d => d.id === activeDateTab)?.slots.map(slot => (
                         <button 
