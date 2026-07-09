@@ -6,6 +6,7 @@ import styles from './page.module.css';
 declare global {
   interface Window {
     dataLayer: Record<string, unknown>[];
+    fbq: (...args: unknown[]) => void;
   }
 }
 
@@ -42,7 +43,7 @@ const INFO_CARDS: Record<string, { title: string; text: string; image: string }>
 
 export default function VIPFunnel() {
   const [step, setStep] = useState(0);
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false); // Disabled — all traffic is paid/cold
   const [showVideo, setShowVideo] = useState(false);
   const [showInfoCard, setShowInfoCard] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -77,7 +78,7 @@ export default function VIPFunnel() {
     if (field === 'concierge') setConcierge(value);
     if (field === 'timeline') setTimeline(value);
 
-    // Conditional Routing — rejections skip info cards
+    // Conditional Routing — rejections
     if (field === 'budget' && value === 'No') {
       setStep(8); // Rejection PDF
       return;
@@ -87,18 +88,8 @@ export default function VIPFunnel() {
       return;
     }
     
-    // Show info card after qualifying answer
-    const cardMap: Record<string, string> = {
-      objective: 'after-objective',
-      budget: 'after-budget',
-      concierge: 'after-concierge',
-      timeline: 'after-timeline',
-    };
-    if (cardMap[field]) {
-      setShowInfoCard(cardMap[field]);
-    } else {
-      setStep(prev => prev + 1);
-    }
+    // Skip info cards — go directly to next step (reduces friction for paid traffic)
+    setStep(prev => prev + 1);
   };
 
   const handleInfoCardContinue = () => {
@@ -133,10 +124,15 @@ export default function VIPFunnel() {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: formBody
       });
-      // Fire generic pixel event simulation
+      // Fire tracking events
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('Qualified_Lead_Booked', { detail: payload }));
         window.dataLayer?.push({event: 'form_submit', lead_type: 'qualified'});
+        // Meta Pixel events (safety net alongside GTM)
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'CompleteRegistration');
+          window.fbq('track', 'Lead');
+        }
       }
       setStep(6); // Success
     } catch (error) {
@@ -296,7 +292,7 @@ export default function VIPFunnel() {
             )}
 
             {/* ====== STEP 0: HERO ====== */}
-            {step === 0 && !showInfoCard && !showPopup && (
+            {step === 0 && !showPopup && (
               <div className={`${styles.stepContainer} fade-in`}>
                 <div className={styles.heroEventBadge}>📍 Leicester, UK | July 31 to Aug 3, 2026</div>
                 <h1 className={styles.questionTitle}>Exclusive Dubai Property Show</h1>
@@ -531,6 +527,7 @@ export default function VIPFunnel() {
                     });
                   } catch (err) { console.error(err); }
                   window.dataLayer?.push({event: 'download_guide', lead_type: 'less_qualified'});
+                  if (typeof window.fbq === 'function') window.fbq('track', 'Lead');
                   window.location.href = '/assets/UK%20INVESTMENT%20GUIDE.pdf';
                 }}>
                    <div className={styles.formGroup}>
@@ -583,6 +580,7 @@ export default function VIPFunnel() {
                     });
                   } catch (err) { console.error(err); }
                   window.dataLayer?.push({event: 'form_submit', lead_type: 'waitlist'});
+                  if (typeof window.fbq === 'function') window.fbq('track', 'Lead');
                   setStep(6);
                 }}>
                    <div className={styles.formGroup}>
