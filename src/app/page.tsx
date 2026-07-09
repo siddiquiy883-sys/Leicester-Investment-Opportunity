@@ -326,9 +326,6 @@ export default function VIPFunnel() {
                     <div className={styles.playTriangle}></div>
                   </div>
                 </div>
-                <button id="btn-hero-begin-application" className={`${styles.submitButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'begin_application', source: 'hero'}); setStep(1); }} style={{ background: 'var(--color-gold)', color: 'var(--color-onyx)' }}>
-                  Begin Application
-                </button>
               </div>
             )}
 
