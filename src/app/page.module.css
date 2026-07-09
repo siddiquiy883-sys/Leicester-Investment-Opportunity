@@ -404,20 +404,23 @@
 }
 
 .dateTabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .dateTabs {
+    display: flex;
+    gap: 8px;
+  }
 }
 
 .dateTab {
-  flex: 1;
-  min-width: 90px;
-  padding: 12px 5px;
+  padding: 10px 6px;
   text-align: center;
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   white-space: nowrap;
   border: 1px solid var(--color-glass-border);
   font-weight: 500;
@@ -425,6 +428,7 @@
 
 @media (min-width: 768px) {
   .dateTab {
+    flex: 1;
     min-width: 100px;
     padding: 12px 10px;
     font-size: 0.9rem;
@@ -440,8 +444,8 @@
 
 .slotsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
 }
 
 @media (min-width: 768px) {
@@ -452,9 +456,9 @@
 }
 
 .slotButton {
-  padding: 10px;
+  padding: 10px 4px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.05);
   transition: all 0.2s ease;
@@ -472,6 +476,41 @@
   border-color: #25D366;
   color: #25D366;
   font-weight: 600;
+}
+
+/* ===== PHONE INPUT ===== */
+.phoneInputWrapper {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-glass-bg);
+}
+
+.phonePrefix {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 1rem;
+  border-right: 1px solid var(--color-glass-border);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.phoneInput {
+  flex: 1;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 14px 12px;
+  font-size: 1rem;
+  background: transparent;
+  color: var(--color-platinum);
+  outline: none;
+  letter-spacing: 1px;
 }
 
 .scarcityContainer {

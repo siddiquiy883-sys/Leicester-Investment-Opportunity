@@ -55,7 +55,7 @@ export default function VIPFunnel() {
   const [timeline, setTimeline] = useState('');
   const [timeSlot, setTimeSlot] = useState({ date: '', time: '' });
   
-  const [userData, setUserData] = useState({ firstName: '', lastName: '', email: '', whatsapp: '' });
+  const [userData, setUserData] = useState({ firstName: '', lastName: '', email: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeDateTab, setActiveDateTab] = useState(CALENDAR_DATES[0].id);
 
@@ -112,7 +112,10 @@ export default function VIPFunnel() {
     
     const payload = {
       timestamp: new Date().toISOString(),
-      ...userData,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      whatsapp: `+44${userData.phone}`,
       objective,
       budget,
       concierge,
@@ -443,8 +446,26 @@ export default function VIPFunnel() {
                     <input required type="email" value={userData.email} onChange={e => setUserData({...userData, email: e.target.value})} />
                   </div>
                   <div className={styles.formGroup}>
-                    <label>UK WhatsApp (+44)</label>
-                    <input required type="tel" pattern="(\+44|0)[0-9]{9,10}" placeholder="+44 7123 456789" value={userData.whatsapp} onChange={e => setUserData({...userData, whatsapp: e.target.value})} />
+                    <label>UK Phone Number</label>
+                    <div className={styles.phoneInputWrapper}>
+                      <span className={styles.phonePrefix}>+44</span>
+                      <input 
+                        required 
+                        type="tel" 
+                        inputMode="numeric"
+                        pattern="[0-9]{10,11}" 
+                        minLength={10}
+                        maxLength={11}
+                        placeholder="7123 456789" 
+                        value={userData.phone} 
+                        onChange={e => {
+                          const digits = e.target.value.replace(/[^0-9]/g, '');
+                          setUserData({...userData, phone: digits});
+                        }}
+                        title="Enter your 10 or 11 digit UK phone number without +44"
+                        className={styles.phoneInput}
+                      />
+                    </div>
                   </div>
 
                   <div className={styles.scarcityContainer}>
