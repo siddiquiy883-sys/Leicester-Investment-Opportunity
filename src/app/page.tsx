@@ -344,6 +344,10 @@ export default function VIPFunnel() {
                     </button>
                   ))}
                 </div>
+                <div className={styles.trustBadge}>
+                  <span>📈</span>
+                  <p>Sobha Realty has delivered <strong>30%+ capital appreciation</strong> in key Dubai corridors. First access to off-market units at this event.</p>
+                </div>
               </div>
             )}
 
@@ -358,6 +362,10 @@ export default function VIPFunnel() {
                   <button id="btn-step2-budget-no" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step2_budget', value: 'no'}); handleNext('budget', 'No'); }}>
                     No, not currently.
                   </button>
+                </div>
+                <div className={styles.trustBadge}>
+                  <span>💰</span>
+                  <p>Flexible payment plans up to <strong>5 years</strong>. Fully <strong>RERA-regulated</strong> and <strong>DLD-approved</strong> for your peace of mind.</p>
                 </div>
               </div>
             )}
@@ -374,6 +382,10 @@ export default function VIPFunnel() {
                     </button>
                   ))}
                 </div>
+                <div className={styles.trustBadge}>
+                  <span>🤝</span>
+                  <p>From money wiring to rental management — our <strong>full concierge team handles everything</strong> so you invest from the UK with zero hassle.</p>
+                </div>
               </div>
             )}
 
@@ -385,6 +397,10 @@ export default function VIPFunnel() {
                   <button id="btn-step4-timeline-immediately" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step4_timeline', value: 'immediately'}); handleNext('timeline', 'Immediately'); }}>Immediately</button>
                   <button id="btn-step4-timeline-1-3-months" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step4_timeline', value: '1-3months'}); handleNext('timeline', '1-3 Months'); }}>1-3 Months</button>
                   <button id="btn-step4-timeline-next-year" className={`${styles.optionButton} glass-button`} onClick={() => { window.dataLayer?.push({event: 'step4_timeline', value: 'next_year'}); handleNext('timeline', 'Next Year'); }}>Next Year</button>
+                </div>
+                <div className={styles.trustBadge}>
+                  <span>🔒</span>
+                  <p>Off-market units released <strong>exclusively at this event</strong>. Early investors secure the best floor plans and pricing before public launch.</p>
                 </div>
               </div>
             )}

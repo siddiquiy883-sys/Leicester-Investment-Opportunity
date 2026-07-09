@@ -388,6 +388,36 @@
   width: 100%;
 }
 
+/* ===== TRUST BADGES (inline on question steps) ===== */
+.trustBadge {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+}
+
+.trustBadge span {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.trustBadge p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--color-platinum);
+  opacity: 0.85;
+}
+
+.trustBadge strong {
+  color: var(--color-gold);
+}
+
 /* ===== CALENDAR ===== */
 .calendarContainer {
   display: flex;
