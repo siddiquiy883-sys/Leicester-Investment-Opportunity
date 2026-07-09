@@ -842,6 +842,42 @@
   }
 }
 
+/* ===== STICKY FOOTER CTA ===== */
+.stickyFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.98), rgba(10, 10, 10, 0.85));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  z-index: 140;
+}
+
+.stickyFooterBtn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-gold);
+  color: var(--color-onyx);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stickyFooterBtn:hover {
+  background: #e6c84a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
+}
+
 /* ===== WHATSAPP FLOATING BUTTON ===== */
 .whatsappFloat {
   position: fixed;

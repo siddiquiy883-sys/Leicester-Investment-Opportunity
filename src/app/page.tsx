@@ -633,6 +633,19 @@ export default function VIPFunnel() {
         </div>
       </div>
 
+      {/* Sticky Footer CTA — hero page only */}
+      {step === 0 && !showPopup && (
+        <div className={styles.stickyFooter}>
+          <button 
+            id="btn-sticky-begin-application"
+            className={styles.stickyFooterBtn}
+            onClick={() => { window.dataLayer?.push({event: 'begin_application', source: 'sticky_footer'}); setStep(1); }}
+          >
+            Begin Application →
+          </button>
+        </div>
+      )}
+
       {/* Floating WhatsApp Button */}
       <a
         id="btn-whatsapp-chat"
