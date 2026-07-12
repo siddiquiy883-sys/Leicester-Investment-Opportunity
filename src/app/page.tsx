@@ -83,10 +83,6 @@ export default function VIPFunnel() {
       setStep(8); // Rejection PDF
       return;
     }
-    if (field === 'timeline' && value === 'Next Year') {
-      setStep(9); // Rejection Waitlist
-      return;
-    }
     
     // Skip info cards — go directly to next step (reduces friction for paid traffic)
     setStep(prev => prev + 1);
